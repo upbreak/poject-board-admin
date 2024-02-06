@@ -1,6 +1,6 @@
 package com.fastcampus.projectboardadmin.controller;
 
-import com.fastcampus.projectboardadmin.config.SecurityConfig;
+import com.fastcampus.projectboardadmin.config.TestSecurityConfig;
 import com.fastcampus.projectboardadmin.dto.UserAccountDto;
 import com.fastcampus.projectboardadmin.service.UserAccountManagementService;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View 컨트롤러 - 회원 관리")
-@Import(SecurityConfig.class)
+@Import(TestSecurityConfig.class)
 @WebMvcTest(UserAccountManagementController.class)
 class UserAccountManagementControllerTest {
 
