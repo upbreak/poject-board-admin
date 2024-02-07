@@ -1,7 +1,7 @@
 package com.fastcampus.projectboardadmin.dto.security;
 
 import com.fastcampus.projectboardadmin.domain.constant.RoleType;
-import com.fastcampus.projectboardadmin.dto.AdminAccountDto;
+import com.fastcampus.projectboardadmin.dto.UserAccountDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +43,7 @@ public record BoardAdminPrincipal(
         );
     }
 
-    public static BoardAdminPrincipal from(AdminAccountDto dto){
+    public static BoardAdminPrincipal from(UserAccountDto dto){
         return BoardAdminPrincipal.of(
                 dto.userId()
                 , dto.userPassword()
@@ -54,8 +54,8 @@ public record BoardAdminPrincipal(
         );
     }
 
-    public AdminAccountDto toDto(){
-        return AdminAccountDto.of(
+    public UserAccountDto toDto(){
+        return UserAccountDto.of(
                 username
                 , password
                 , authorities.stream()

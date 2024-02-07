@@ -1,6 +1,6 @@
 package com.fastcampus.projectboardadmin.repository;
 
-import com.fastcampus.projectboardadmin.domain.AdminAccount;
+import com.fastcampus.projectboardadmin.domain.UserAccount;
 import com.fastcampus.projectboardadmin.domain.constant.RoleType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,52 +23,52 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 class JpaRepositoryTest {
 
-    private final AdminAccountRepository adminAccountRepository;
+    private final UserAccountRepository userAccountRepository;
 
-    public JpaRepositoryTest(@Autowired AdminAccountRepository adminAccountRepository) {
-        this.adminAccountRepository = adminAccountRepository;
+    public JpaRepositoryTest(@Autowired UserAccountRepository userAccountRepository) {
+        this.userAccountRepository = userAccountRepository;
     }
 
     @DisplayName("회원 정보 select 테스트")
     @Test
-    void givenAdminAccounts_whenSelecting_thenWorksFine() {
+    void givenUserAccounts_whenSelecting_thenWorksFine() {
         // Given
 
 
         // When
-        List<AdminAccount> adminAccounts = adminAccountRepository.findAll();
+        List<UserAccount> userAccounts = userAccountRepository.findAll();
 
         // Then
-        assertThat(adminAccounts)
+        assertThat(userAccounts)
                 .isNotNull()
                 .hasSize(4);
     }
 
     @DisplayName("회원 정보 insert 테스트")
     @Test
-    void givenAdminAccount_whenInserting_thenWorksFine() {
+    void givenUserAccount_whenInserting_thenWorksFine() {
         // Given
-        long previousCount = adminAccountRepository.count();
-        AdminAccount adminAccount = AdminAccount.of("test", "pw", Set.of(RoleType.DEVELOPER), "email", "nickname", null);
+        long previousCount = userAccountRepository.count();
+        UserAccount userAccount = UserAccount.of("test", "pw", Set.of(RoleType.DEVELOPER), "email", "nickname", null);
 
         // When
-        adminAccountRepository.save(adminAccount);
+        userAccountRepository.save(userAccount);
 
         // Then
-        assertThat(adminAccountRepository.count()).isEqualTo(previousCount + 1);
+        assertThat(userAccountRepository.count()).isEqualTo(previousCount + 1);
     }
 
     @DisplayName("회원 정보 update 테스트")
     @Test
-    void givenAdminAccountAndRoleType_whenUpdating_thenWorksFine() {
+    void givenUserAccountAndRoleType_whenUpdating_thenWorksFine() {
         // Given
-        AdminAccount adminAccount = adminAccountRepository.getReferenceById("jinwoo");
-        adminAccount.addRoleType(RoleType.DEVELOPER);
-        adminAccount.addRoleTypes(List.of(RoleType.USER, RoleType.USER));
-        adminAccount.removeRoleType(RoleType.ADMIN);
+        UserAccount userAccount = userAccountRepository.getReferenceById("jinwoo");
+        userAccount.addRoleType(RoleType.DEVELOPER);
+        userAccount.addRoleTypes(List.of(RoleType.USER, RoleType.USER));
+        userAccount.removeRoleType(RoleType.ADMIN);
 
         // When
-        AdminAccount updateAccount = adminAccountRepository.saveAndFlush(adminAccount);
+        UserAccount updateAccount = userAccountRepository.saveAndFlush(userAccount);
 
         // Then
         assertThat(updateAccount)
@@ -78,16 +78,16 @@ class JpaRepositoryTest {
 
     @DisplayName("회원 정보 delete 테스트")
     @Test
-    void givenAdminAccount_whenDeleting_thenWorksFine() {
+    void givenUserAccount_whenDeleting_thenWorksFine() {
         // Given
-        long previousCount = adminAccountRepository.count();
-        AdminAccount adminAccount = adminAccountRepository.getReferenceById("jinwoo");
+        long previousCount = userAccountRepository.count();
+        UserAccount userAccount = userAccountRepository.getReferenceById("jinwoo");
 
         // When
-        adminAccountRepository.delete(adminAccount);
+        userAccountRepository.delete(userAccount);
 
         // Then
-        assertThat(adminAccountRepository.count()).isEqualTo(previousCount - 1);
+        assertThat(userAccountRepository.count()).isEqualTo(previousCount - 1);
     }
 
     @EnableJpaAuditing

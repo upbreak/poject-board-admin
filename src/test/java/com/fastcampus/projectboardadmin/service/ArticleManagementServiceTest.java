@@ -36,7 +36,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비즈니스 로직 - 게시글 관리")
 class ArticleManagementServiceTest {
 
-//    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
+    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
@@ -47,9 +47,9 @@ class ArticleManagementServiceTest {
             this.sut = sut;
         }
 
-        @DisplayName("게시글 API를 호출하면, 게시글들을 가져온다.")
+        @DisplayName("게시글 API를 호출하면, 게시글을 가져온다.")
         @Test
-        void givenNoting_whenCallingArticleApi_thenReturnArticleList() {
+        void given_when_then() {
             // Given
 
             // When
@@ -57,20 +57,6 @@ class ArticleManagementServiceTest {
 
             // Then
             System.out.println(result.stream().findFirst());
-            assertThat(result).isNotNull();
-        }
-
-        @DisplayName("게시글 API를 호출하면, 게시글을 가져온다.")
-        @Test
-        void givenArticleId_whenCallingArticleApi_thenReturnArticle() {
-            // Given
-            Long id = 3L;
-
-            // When
-            ArticleDto result = sut.getArticle(id);
-
-            // Then
-            System.out.println(result);
             assertThat(result).isNotNull();
         }
     }
@@ -115,7 +101,7 @@ class ArticleManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", expectedArticle.id())
                     .hasFieldOrPropertyWithValue("title", expectedArticle.title())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("userAccountDto.nickname", expectedArticle.userAccount().nickname());
+                    .hasFieldOrPropertyWithValue("useAccount.nickname", expectedArticle.userAccountDto().nickname());
             server.verify();
         }
 
@@ -139,7 +125,7 @@ class ArticleManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", articleId)
                     .hasFieldOrPropertyWithValue("title", expectedArticle.title())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("userAccountDto.nickname", expectedArticle.userAccount().nickname());
+                    .hasFieldOrPropertyWithValue("useAccount.nickname", expectedArticle.userAccountDto().nickname());
             server.verify();
         }
 
@@ -176,6 +162,8 @@ class ArticleManagementServiceTest {
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 "jinwoo"
+                , "pw"
+                , Set.of(RoleType.ADMIN)
                 , "jinwoo@email.com"
                 , "jinwoo"
                 , "memo"

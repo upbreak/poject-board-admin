@@ -5,7 +5,7 @@ import java.util.Set;
 
 public record ArticleDto(
         Long id
-        , UserAccountDto userAccount
+        , UserAccountDto userAccountDto
         , String title
         , String content
         , Set<String> hashtags

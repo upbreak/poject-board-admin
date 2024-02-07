@@ -9,17 +9,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/management/articles")
+
+@RequestMapping("/admin/members")
 @Controller
-public class ArticleManagementController {
+public class AdminUserAccountController {
 
     @GetMapping
-    public String articles(
-            @PageableDefault(size = 10, sort = "createAt", direction = Sort.Direction.DESC)Pageable pageable
+    public String members(
+            @PageableDefault(size = 10, sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable
             , Model model
             , HttpServletRequest request
-            ){
+    ){
         model.addAttribute("requestURI", request.getRequestURI());
-        return "management/articles";
+
+        return "admin/members";
     }
 }

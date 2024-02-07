@@ -21,7 +21,7 @@ import java.util.Set;
         @Index(columnList = "createBy")
 })
 @Entity
-public class AdminAccount extends AuditingFields{
+public class UserAccount extends AuditingFields{
 
     @Id
     @Column(length = 50)
@@ -37,9 +37,9 @@ public class AdminAccount extends AuditingFields{
     @Setter @Column(nullable = false, length = 100) private String nickname;
     @Setter private String memo;
 
-    protected AdminAccount() {}
+    protected UserAccount() {}
 
-    private AdminAccount(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, String createBy) {
+    private UserAccount(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, String createBy) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.roleTypes = roleTypes;
@@ -50,12 +50,12 @@ public class AdminAccount extends AuditingFields{
         this.modifiedBy = createBy;
     }
 
-    public static AdminAccount of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo) {
-        return AdminAccount.of(userId, userPassword, roleTypes, email, nickname, memo, null);
+    public static UserAccount of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo) {
+        return UserAccount.of(userId, userPassword, roleTypes, email, nickname, memo, null);
     }
 
-    public static AdminAccount of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, String createBy) {
-        return new AdminAccount(userId, userPassword, roleTypes, email, nickname, memo, createBy);
+    public static UserAccount of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, String createBy) {
+        return new UserAccount(userId, userPassword, roleTypes, email, nickname, memo, createBy);
     }
 
     public void addRoleType(RoleType roleType){
@@ -73,7 +73,7 @@ public class AdminAccount extends AuditingFields{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AdminAccount that)) return false;
+        if (!(o instanceof UserAccount that)) return false;
         return this.getUserId() != null && this.getUserId().equals(that.userId);
     }
 
