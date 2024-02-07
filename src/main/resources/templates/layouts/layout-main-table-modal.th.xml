@@ -8,7 +8,13 @@
 <<<<<<< Updated upstream
 </thlogic>
 =======
+<<<<<<< Updated upstream
 </thlogic>
+=======
+  <attr sel=".modal-footer/form" th:method="post" />
+</thlogic>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 =======
   <attr sel=".modal-footer/form" th:method="post" />
 </thlogic>
