@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -65,11 +66,12 @@ class ArticleManagementControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(articleId))
                 .andExpect(jsonPath("$.title").value(articleDto.title()))
-                .andExpect(jsonPath("$.userAccount.nickname").value(articleDto.userAccountDto().nickname()));
+                .andExpect(jsonPath("$.userAccount.nickname").value(articleDto.userAccount().nickname()));
         then(articleManagementService).should().getArticle(articleId);
     }
 
     @DisplayName("[view][post] 게시글 삭제 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "MANAGER")
     @Test
     void givenArticleId_whenRequestingDeleteArticle_thenRedirectArticleManageView() throws Exception {
         // Given

@@ -47,7 +47,7 @@ class ArticleManagementServiceTest {
             this.sut = sut;
         }
 
-        @DisplayName("게시글 API를 호출하면, 게시글을 가져온다.")
+        @DisplayName("게시글 API를 호출하면, 게시글들을 가져온다.")
         @Test
         void givenNoting_whenCallingArticleApi_thenReturnArticleList() {
             // Given
@@ -57,6 +57,20 @@ class ArticleManagementServiceTest {
 
             // Then
             System.out.println(result.stream().findFirst());
+            assertThat(result).isNotNull();
+        }
+
+        @DisplayName("게시글 API를 호출하면, 게시글을 가져온다.")
+        @Test
+        void givenArticleId_whenCallingArticleApi_thenReturnArticle() {
+            // Given
+            Long id = 3L;
+
+            // When
+            ArticleDto result = sut.getArticle(id);
+
+            // Then
+            System.out.println(result);
             assertThat(result).isNotNull();
         }
     }
@@ -101,7 +115,7 @@ class ArticleManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", expectedArticle.id())
                     .hasFieldOrPropertyWithValue("title", expectedArticle.title())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("useAccount.nickname", expectedArticle.userAccountDto().nickname());
+                    .hasFieldOrPropertyWithValue("userAccountDto.nickname", expectedArticle.userAccount().nickname());
             server.verify();
         }
 
@@ -125,7 +139,7 @@ class ArticleManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", articleId)
                     .hasFieldOrPropertyWithValue("title", expectedArticle.title())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("useAccount.nickname", expectedArticle.userAccountDto().nickname());
+                    .hasFieldOrPropertyWithValue("userAccountDto.nickname", expectedArticle.userAccount().nickname());
             server.verify();
         }
 
