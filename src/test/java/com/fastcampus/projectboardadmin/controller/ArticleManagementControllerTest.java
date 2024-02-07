@@ -1,23 +1,21 @@
 package com.fastcampus.projectboardadmin.controller;
 
-import com.fastcampus.projectboardadmin.config.SecurityConfig;
-import com.fastcampus.projectboardadmin.domain.constant.RoleType;
+import com.fastcampus.projectboardadmin.config.TestSecurityConfig;
 import com.fastcampus.projectboardadmin.dto.ArticleDto;
 import com.fastcampus.projectboardadmin.dto.UserAccountDto;
 import com.fastcampus.projectboardadmin.service.ArticleManagementService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -26,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View 컨트롤러 - 게시글 관리")
-@Import(SecurityConfig.class)
+@Import(TestSecurityConfig.class)
 @WebMvcTest(ArticleManagementController.class)
 class ArticleManagementControllerTest {
 
@@ -68,11 +66,12 @@ class ArticleManagementControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(articleId))
                 .andExpect(jsonPath("$.title").value(articleDto.title()))
-                .andExpect(jsonPath("$.userAccount.nickname").value(articleDto.userAccountDto().nickname()));
+                .andExpect(jsonPath("$.userAccount.nickname").value(articleDto.userAccount().nickname()));
         then(articleManagementService).should().getArticle(articleId);
     }
 
     @DisplayName("[view][post] 게시글 삭제 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "MANAGER")
     @Test
     void givenArticleId_whenRequestingDeleteArticle_thenRedirectArticleManageView() throws Exception {
         // Given
@@ -106,8 +105,6 @@ class ArticleManagementControllerTest {
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 "jinwoo"
-                , "pw"
-                , Set.of(RoleType.ADMIN)
                 , "jinwoo@email.com"
                 , "jinwoo"
                 , "memo"
