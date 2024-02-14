@@ -37,7 +37,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비즈니스 로직 - 댓글 관리")
 class ArticleCommentManagementServiceTest {
 
-//    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
+    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
@@ -102,7 +102,7 @@ class ArticleCommentManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", expectedArticle.id())
                     .hasFieldOrPropertyWithValue("articleId", expectedArticle.articleId())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("useAccount.nickname", expectedArticle.userAccountDto().nickname());
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.userAccount().nickname());
             server.verify();
         }
 
@@ -126,7 +126,7 @@ class ArticleCommentManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", articleId)
                     .hasFieldOrPropertyWithValue("articleId", expectedArticle.articleId())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("useAccount.nickname", expectedArticle.userAccountDto().nickname());
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.userAccount().nickname());
             server.verify();
         }
 
