@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class AdminAccountService {
 
     private final AdminAccountRepository adminAccountRepository;
-
     @Transactional(readOnly = true)
     public Optional<AdminAccountDto> searchUser(String username) {
         return adminAccountRepository.findById(username)
