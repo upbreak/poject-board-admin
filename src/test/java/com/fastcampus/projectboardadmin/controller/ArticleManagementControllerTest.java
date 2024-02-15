@@ -38,6 +38,7 @@ class ArticleManagementControllerTest {
     }
 
     @DisplayName("[view][get] 게시글 관리 페이지 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "USER")
     @Test
     void givenNoting_whenRequestingArticleManagementView_thenReturnsArticleManagementView() throws Exception {
         // Given
@@ -53,6 +54,7 @@ class ArticleManagementControllerTest {
     }
 
     @DisplayName("[data][get] 게시글 1개 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "USER")
     @Test
     void givenArticleId_whenRequestingArticle_thenReturnArticle() throws Exception {
         // Given

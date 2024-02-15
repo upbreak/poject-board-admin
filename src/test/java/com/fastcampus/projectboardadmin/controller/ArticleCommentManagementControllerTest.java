@@ -38,6 +38,7 @@ class ArticleCommentManagementControllerTest {
     }
 
     @DisplayName("[view][get] 댓글 관리 페이지 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "USER")
     @Test
     void givenNoting_whenRequestArticleCommentManageView_thenReturnArticleCommentManageView() throws Exception {
         // Given
@@ -53,6 +54,7 @@ class ArticleCommentManagementControllerTest {
     }
 
     @DisplayName("[data][get] 댓글 1개 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "USER")
     @Test
     void givenArticleCommentId_whenRequestingArticleComment_thenReturnArticleComment() throws Exception {
         // Given
