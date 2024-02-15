@@ -115,7 +115,7 @@ class ArticleManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", expectedArticle.id())
                     .hasFieldOrPropertyWithValue("title", expectedArticle.title())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("userAccountDto.nickname", expectedArticle.userAccount().nickname());
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.userAccount().nickname());
             server.verify();
         }
 
@@ -125,7 +125,7 @@ class ArticleManagementServiceTest {
             // Given
             Long articleId = 1L;
             ArticleDto expectedArticle = createArticleDto("제목", "글");
-            server.expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId))
+            server.expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticle)
                             , MediaType.APPLICATION_JSON
@@ -139,7 +139,7 @@ class ArticleManagementServiceTest {
                     .hasFieldOrPropertyWithValue("id", articleId)
                     .hasFieldOrPropertyWithValue("title", expectedArticle.title())
                     .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("userAccountDto.nickname", expectedArticle.userAccount().nickname());
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.userAccount().nickname());
             server.verify();
         }
 

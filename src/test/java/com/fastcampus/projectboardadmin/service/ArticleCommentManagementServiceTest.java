@@ -112,7 +112,7 @@ class ArticleCommentManagementServiceTest {
             // Given
             Long articleId = 1L;
             ArticleCommentDto expectedArticle = createArticleCommentDto("글");
-            server.expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleId))
+            server.expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticle)
                             , MediaType.APPLICATION_JSON
