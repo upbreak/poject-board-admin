@@ -1,11 +1,8 @@
 package com.fastcampus.projectboardadmin.service;
 
-import com.fastcampus.projectboardadmin.domain.constant.RoleType;
-import com.fastcampus.projectboardadmin.dto.ArticleDto;
 import com.fastcampus.projectboardadmin.dto.UserAccountDto;
 import com.fastcampus.projectboardadmin.dto.properties.ProjectProperties;
-import com.fastcampus.projectboardadmin.dto.reponse.ArticleClientResponse;
-import com.fastcampus.projectboardadmin.dto.reponse.UserAcccountClientResponse;
+import com.fastcampus.projectboardadmin.dto.reponse.UserAccountClientResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
@@ -23,10 +20,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.client.MockRestServiceServer;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -35,7 +30,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비즈니스 로직 - 회원 관리")
 class UserAccountManagementServiceTest {
     
-//    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
+    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
@@ -87,7 +82,7 @@ class UserAccountManagementServiceTest {
             String userId = "test";
             String nickname = "jinwoo";
             UserAccountDto expectedUserAccount = createUserAccountDto(userId, nickname);
-            UserAcccountClientResponse expectedReponse = UserAcccountClientResponse.of(List.of(expectedUserAccount));
+            UserAccountClientResponse expectedReponse = UserAccountClientResponse.of(List.of(expectedUserAccount));
             server.expect(requestTo(projectProperties.board().url() + "/api/userAccounts?size=10000"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedReponse)
