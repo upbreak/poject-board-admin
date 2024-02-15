@@ -22,11 +22,11 @@ public record AdminAccountDto(
         , String modifiedBy
 ) {
     public static AdminAccountDto of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo) {
-        return AdminAccountDto.of(userId, userPassword, roleTypes, email, nickname, memo, null, null);
+        return AdminAccountDto.of(userId, userPassword, roleTypes, email, nickname, memo, null, null, null);
     }
 
-    public static AdminAccountDto of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, String createBy, String modifiedBy) {
-        return new AdminAccountDto(userId, userPassword, roleTypes, email, nickname, memo, null, createBy, null, modifiedBy);
+    public static AdminAccountDto of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, LocalDateTime createAt, String createBy, String modifiedBy) {
+        return new AdminAccountDto(userId, userPassword, roleTypes, email, nickname, memo, createAt, createBy, null, modifiedBy);
     }
 
     public static AdminAccountDto from(AdminAccount entity){
@@ -37,6 +37,7 @@ public record AdminAccountDto(
                 , entity.getEmail()
                 , entity.getNickname()
                 , entity.getMemo()
+                , entity.getCreateAt()
                 , entity.getCreateBy()
                 , entity.getModifiedBy()
         );
