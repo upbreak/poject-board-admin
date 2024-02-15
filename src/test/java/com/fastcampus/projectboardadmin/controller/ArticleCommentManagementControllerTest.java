@@ -11,12 +11,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.BDDMockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -46,7 +48,7 @@ class ArticleCommentManagementControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("management/articleComments"))
-                .andExpect(model().attribute("articleComments", List.of()));
+                .andExpect(model().attribute("comments", List.of()));
         then(articleCommentManagementService).should().getArticleComments();
     }
 
@@ -63,12 +65,13 @@ class ArticleCommentManagementControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(articleCommentId))
-                .andExpect(jsonPath("$.cotent").value(articleCommentDto.content()))
-                .andExpect(jsonPath("$.userAccount.nickname").value(articleCommentDto.userAccountDto().nickname()));
+                .andExpect(jsonPath("$.content").value(articleCommentDto.content()))
+                .andExpect(jsonPath("$.userAccount.nickname").value(articleCommentDto.userAccount().nickname()));
         then(articleCommentManagementService).should().getArticleComment(articleCommentId);
     }
 
     @DisplayName("[view][post] 댓글 삭제 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "MANAGER")
     @Test
     void givenArticleCommentId_whenRequestDeleteArticleComment_thenDeleteArticleComment() throws Exception {
         // Given
@@ -76,7 +79,9 @@ class ArticleCommentManagementControllerTest {
         willDoNothing().given(articleCommentManagementService).deleteArticleComment(articleCommentId);
 
         // When & Then
-        mvc.perform(post("/management/article-comments/" + articleCommentId))
+        mvc.perform(post("/management/article-comments/" + articleCommentId)
+                        .with(csrf())
+                )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/management/article-comments"))
                 .andExpect(redirectedUrl("/management/article-comments"));

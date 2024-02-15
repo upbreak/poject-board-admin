@@ -23,7 +23,7 @@ public record ArticleCommentClientResponse(
         );
     }
 
-    public List<ArticleCommentDto> articles() {
+    public List<ArticleCommentDto> articleComments() {
         return this.embedded.articleCommentDtos;
     }
 

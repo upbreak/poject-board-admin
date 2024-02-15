@@ -81,7 +81,7 @@ class AdminAccountServiceTest {
                 .hasFieldOrPropertyWithValue("email", adminAccount.getEmail())
                 .hasFieldOrPropertyWithValue("nickname", adminAccount.getNickname())
                 .hasFieldOrPropertyWithValue("memo", adminAccount.getMemo())
-                .hasFieldOrPropertyWithValue("createdBy", adminAccount.getUserId())
+                .hasFieldOrPropertyWithValue("createBy", adminAccount.getUserId())
                 .hasFieldOrPropertyWithValue("modifiedBy", adminAccount.getUserId());
         then(adminAccountRepository).should().save(adminAccount);
     }

@@ -7,4 +7,26 @@
     <attr sel="#layout-right-aside" th:replace="layouts/layout-right-aside :: aside" />
     <attr sel="#layout-footer" th:replace="layouts/layout-footer :: footer" />
     <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
+
+    <attr sel="#main-table">
+        <attr sel="thead/tr">
+            <attr sel="th[0]" th:text="ID" />
+            <attr sel="th[1]" th:text="닉네임" />
+            <attr sel="th[2]" th:text="이메일" />
+            <attr sel="th[3]" th:text="메모" />
+            <attr sel="th[4]" th:text="작성자" />
+            <attr sel="th[5]" th:text="작성일시" />
+        </attr>
+
+        <attr sel="tbody" th:remove="all-but-first">
+            <attr sel="tr[0]" th:each="account : ${accounts}">
+                <attr sel="td[0]" th:text="${account.userId}" />
+                <attr sel="td[1]" th:text="${account.nickname}" />
+                <attr sel="td[2]" th:text="${account.email}" />
+                <attr sel="td[3]" th:text="${account.memo}" />
+                <attr sel="td[4]" th:text="${account.createBy}" />
+                <attr sel="td[5]/time" th:datetime="${account.createAt}" th:text="${#temporals.format(account.createAt, 'yyyy-MM-dd HH:mm:ss')}" />
+            </attr>
+        </attr>
+    </attr>
 </thlogic>

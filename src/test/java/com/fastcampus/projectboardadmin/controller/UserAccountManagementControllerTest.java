@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -35,6 +36,7 @@ class UserAccountManagementControllerTest {
     }
 
     @DisplayName("[view][get] 회원 관리 페이지 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "USER")
     @Test
     void givenNothing_whenRequestingUserAccountManagementView_thenReturnsUserAccountManagementView() throws Exception {
         // Given
@@ -45,11 +47,12 @@ class UserAccountManagementControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("management/userAccounts"))
-                .andExpect(model().attribute("userAccounts", List.of()));
+                .andExpect(model().attribute("accounts", List.of()));
         then(userAccountManagementService).should().getUserAccounts();
     }
 
     @DisplayName("[data][get] 회원 정보 1개 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "USER")
     @Test
     void givenUserAccount_whenRequestUserAccount_thenReturnUserAccount() throws Exception {
         // Given
@@ -68,6 +71,7 @@ class UserAccountManagementControllerTest {
     }
 
     @DisplayName("[view][post] 회원 정보 삭제 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "MANAGER")
     @Test
     void givenArticleId_whenRequestingDeleteArticle_thenRedirectArticleManageView() throws Exception {
         // Given

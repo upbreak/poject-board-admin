@@ -49,6 +49,7 @@ class AdminAccountControllerTest {
     }
 
     @DisplayName("[view][get] 어드민 회원 페이지 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "USER")
     @Test
     void givenNothing_whenRequestingAdminMembersView_thenReturnsAdminMembersView() throws Exception {
         // Given
