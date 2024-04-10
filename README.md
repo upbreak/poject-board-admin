@@ -27,3 +27,10 @@ Spring Boot
 - webjars-locator-core
 - sockjs-client
 - stomp-websocket
+
+## Feature List
+* 도메인 설계
+* jpa + querydsl를 이용한 crud 구현
+* Thymeleaf + AdminLTE를 이용하여 화면 구현
+* 게시판서비스(회원/게시글/댓글) 관리 로직 구현
+* kakao OAuth 2기능을 이용하여 인증기능 구현
